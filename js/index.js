@@ -19,8 +19,19 @@ function appStart() {
     index = 0;
   };
 
+  const keyBoardHandle = () => {
+    const keyBlocks = document.querySelectorAll(".key-block");
+    for (let i = 0; i < 26; i++) {
+      if (정답.includes(keyBlocks[i].innerText)){
+        keyBlocks[i].style.background = "#6AAA64";
+      }
+    }
+
+  }
+
   const gameover = () => {
-    window.removeEventListener("keydown", hadleKeydown);
+    window.removeEventListener("keydown", handleKeydown);
+    keyBoardHandle();
     displayGameover();
     clearInterval(timer);
   };
@@ -34,11 +45,16 @@ function appStart() {
       );
       const 입력한_글자 = block.innerText;
       const 정답_글자 = 정답[i];
+
       if (입력한_글자 === 정답_글자) {
         맞은_갯수++;
         block.style.background = "#6AAA64";
+        block.className += " right-shake"
       } else if (정답.includes(입력한_글자)) block.style.background = "#C9B458";
-      else block.style.background = "#787C7E";
+      else {
+        block.style.background = "#787C7E"; 
+        block.className += " wrong-shake"
+      }
     }
     if (맞은_갯수 === 5) gameover();
     else nextLine();
@@ -54,7 +70,7 @@ function appStart() {
     }
   };
 
-  const hadleKeydown = (e) => {
+  const handleKeydown = (e) => {
     const key = e.key.toUpperCase();
     const keyCode = e.keyCode;
     const thisBlock = document.querySelector(
@@ -68,6 +84,38 @@ function appStart() {
       thisBlock.innerText = key;
       index++;
     }
+  };
+
+  const handleKeyClick = (e) => {
+    const key = e.target.innerText;
+    if (!key) return;
+
+    if (key === "ENTER") {
+      if (index === 5) handleEnterKey();
+      return;
+    }
+
+    if (key === "BACK") {
+      handleBackspace();
+      return;
+    }
+
+    if (index < 5) {
+      const thisBlock = document.querySelector(
+        `.board-block[data-index='${attepmts}${index}']`
+      );
+      thisBlock.innerText = key;
+      index++;
+    }
+  };
+
+  const addKeyboardClickEvents = () => {
+    const keyBlocks = document.querySelectorAll(
+      ".key-block, .enter-key-block, .backspace-key-block"
+    );
+    keyBlocks.forEach((block) => {
+      block.addEventListener("click", handleKeyClick);
+    });
   };
 
   const startTime = () => {
@@ -86,7 +134,8 @@ function appStart() {
     timer = setInterval(setTime, 1000);
   };
   startTime();
-  window.addEventListener("keydown", hadleKeydown);
+  window.addEventListener("keydown", handleKeydown);
+  addKeyboardClickEvents();
 }
 
 appStart();

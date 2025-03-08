@@ -1,0 +1,45 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+  
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+  }
+  
+  .enter-key-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d3d6da;
+    width: 90px;
+    height: 60px;
+  }
+  
+  .backspace-key-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d3d6da;
+    width: 90px;
+    height: 60px;
+  }
+
+  .key-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d3d6da;
+    width: 60px;
+    height: 60px;
+  }
